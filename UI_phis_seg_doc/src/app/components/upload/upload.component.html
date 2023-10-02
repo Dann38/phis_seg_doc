@@ -1,0 +1,13 @@
+<h3>{{ text_block }}</h3>
+<p>upload works!</p>
+
+<button class="btn btn-danger" (click)="upload()">Кнопка</button>
+<form (submit)="upload(name_img.value)">
+  <div class="form-group">
+    <label for="option"></label>
+    <input type="text" id="option"
+           placeholder="Введите что-то" class="form-control" #name_img>
+    <br>
+    <button type="button" class=" btn btn-outline-success">Загрузить</button>
+  </div>
+</form>

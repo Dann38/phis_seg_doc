@@ -2,9 +2,9 @@ import numpy as np
 import os
 import cv2
 import matplotlib.pyplot as plt
-from utils.bold_classifier import PsBoldClassifier
-from utils.document_reader import DocumentReader
-from utils.marker import Marker
+from doc_img_utils.bold_classifier import PsBoldClassifier
+from doc_img_utils.document_reader import DocumentReader
+from doc_img_utils.marker import Marker
 
 class Manager:
     def __init__(self):

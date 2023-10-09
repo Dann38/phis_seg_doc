@@ -3,9 +3,9 @@ from typing import List
 
 import numpy as np
 
-from utils.binarizer import ValleyEmphasisBinarizer
-from utils.clusterizer import BoldAgglomerativeClusterizer, BaseClusterizer
-from utils.bbox import BBox
+from doc_img_utils.binarizer import ValleyEmphasisBinarizer
+from doc_img_utils.clusterizer import BoldAgglomerativeClusterizer, BaseClusterizer
+from doc_img_utils.bbox import BBox
 from ..bold_classifier import BaseBoldClassifier
 from ..types_font import REGULAR
 

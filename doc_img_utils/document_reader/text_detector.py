@@ -9,8 +9,8 @@ from doctr.models import detection_predictor
 from doctr.models.detection.predictor import DetectionPredictor
 from scipy.signal import savgol_filter, find_peaks
 
-from utils.bbox import BBox
-from utils.binarizer import adap_binarizer as binarize  # наша бинаризация
+from doc_img_utils.bbox import BBox
+from doc_img_utils.binarizer import adap_binarizer as binarize  # наша бинаризация
 
 
 '''

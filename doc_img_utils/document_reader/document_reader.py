@@ -1,7 +1,7 @@
 import numpy as np
 from typing import List, Tuple
 import os
-from utils.bbox import BBox
+from doc_img_utils.bbox import BBox
 from .text_detector import TextDetector
 
 

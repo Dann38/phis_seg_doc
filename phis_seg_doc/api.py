@@ -10,7 +10,7 @@ manager = Manager()
 
 
 def run_api() -> None:
-    uvicorn.run(app=app, host="0.0.0.0", port=int(PORT))  # noqa
+    uvicorn.run(app=app, host="0.0.0.0", port=int(PORT))
 
 
 @app.get("/hello")
@@ -26,9 +26,11 @@ async def upload_file(file: UploadFile):
     print(file.size)
     manager.set_img(file.file.read())
 
+
 @app.post("/file/classify")
 async def classify():
     manager.classify()
+
 
 @app.get("/file/get_img")
 async def get_img():

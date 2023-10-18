@@ -72,3 +72,7 @@ weasyprint==60.1
 webencodings==0.5.1
 zipp==3.17.0
 zopfli==0.2.3
+
+setuptools~=57.0.0
+pytesseract~=0.3.10
+flask~=3.0.0

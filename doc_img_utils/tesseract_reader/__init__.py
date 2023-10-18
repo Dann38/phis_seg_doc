@@ -1,0 +1,1 @@
+from .tesseract_reader import TesseractReader, TesseractReaderConfig

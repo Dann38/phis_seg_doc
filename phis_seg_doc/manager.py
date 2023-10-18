@@ -1,10 +1,11 @@
 import numpy as np
 import os
 import cv2
-import matplotlib.pyplot as plt
+
 from doc_img_utils.bold_classifier import PsBoldClassifier
-from doc_img_utils.document_reader import DocumentReader
+from doc_img_utils.tesseract_reader import TesseractReader, TesseractReaderConfig
 from doc_img_utils.marker import Marker
+
 
 class Manager:
     def __init__(self):
@@ -20,12 +21,12 @@ class Manager:
         self.img = cv2.imdecode(chunk_arr, cv2.IMREAD_COLOR)
 
     def classify(self):
-        doc_reader = DocumentReader()
+        conf_doc_reader = TesseractReaderConfig(lang="rus")
+        doc_reader = TesseractReader(conf_doc_reader)
         classifier = PsBoldClassifier()
+        classifier.clusterizer.significance_level = 0.50
         marker = Marker()
-        img, lines = doc_reader.read(self.img)
-        self.words = [word for line in lines for word in line]
-        print(self.words)
+        self.words = doc_reader.read(self.img)
         self.style = classifier.classify(self.img, self.words)
         self.img = marker.mark(self.img, self.words, self.style)
 

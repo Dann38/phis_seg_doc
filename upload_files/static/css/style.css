@@ -1,0 +1,54 @@
+.context{
+    display: flex;
+    width: 800px;
+    margin: auto;
+
+}
+
+.form-context{
+    display: block;
+    flex-direction: column;
+}
+
+.block-upload-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: aqua;   
+    width: 200px;
+    
+}
+
+.block-upload-file{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    height: 800px;
+    background-color: dodgerblue;
+}
+.upload-file{
+    max-width: 600px;
+    max-height: 800px;
+    margin: auto;
+}
+.label-input{
+    display: block;
+}
+.input-file{
+    width: 200px;
+    display: block;
+}
+
+#button_send{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    background-color: blue;
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+    color:whitesmoke;
+}
+

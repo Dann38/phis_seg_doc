@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Upload Files</title>
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+    
+</head>
+<body>
+     
+     <div class="context">
+          <div class="block-upload-form">
+               <form id="form-upload" method="POST" action="">
+                    <div class="form-context">
+                         <label class="label-input" for="file-input">Выберите файл</label>
+                         <input class="input-file" id="file-input" type="file" name="file" multiple> 
+                    </div>
+               </form>
+               <div id="button_send">Отправить</div>
+          </div>
+          <div class="block-upload-file">
+               <img src="" alt="Изображение не загружено" class="upload-file">
+          </div>
+     </div>
+</body>
+     <script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+</html>

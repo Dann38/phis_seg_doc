@@ -5,6 +5,7 @@ import cv2
 from doc_img_utils.bold_classifier import PsBoldClassifier
 from doc_img_utils.tesseract_reader import TesseractReader, TesseractReaderConfig
 from doc_img_utils.marker import Marker
+from db_manager import ManagerDB
 
 
 class Manager:
@@ -13,22 +14,40 @@ class Manager:
         self.words = None
         self.style = None
 
+        self.db_manager = ManagerDB()
+        self.db_manager.open_db()
+
     def get_hello(self):
+        self.db_manager.first_start()
         return "H I !!!"
 
     def set_img(self, img: bytes):
-        chunk_arr = np.frombuffer(img, dtype=np.uint8)
-        self.img = cv2.imdecode(chunk_arr, cv2.IMREAD_COLOR)
+        id_image = self.db_manager.add_origin_image(img)
+        return id_image
 
-    def classify(self):
+    def classify(self, id_image: int):
+        print(id_image)
+        # Получить IMG
+        image_bytes = self.db_manager.get_row_image_id(id_image)[0]
+        chunk_arr = np.frombuffer(image_bytes, dtype=np.uint8)
+        img_cv2 = cv2.imdecode(chunk_arr, cv2.IMREAD_COLOR)
+
+        # Обработка
         conf_doc_reader = TesseractReaderConfig(lang="rus")
         doc_reader = TesseractReader(conf_doc_reader)
         classifier = PsBoldClassifier()
         classifier.clusterizer.significance_level = 0.50
         marker = Marker()
-        self.words = doc_reader.read(self.img)
-        self.style = classifier.classify(self.img, self.words)
-        self.img = marker.mark(self.img, self.words, self.style)
+        self.words = doc_reader.read(img_cv2)
+        self.style = classifier.classify(img_cv2, self.words)
+        img_cv2 = marker.mark(img_cv2, self.words, self.style)
+
+        bytes_img = bytearray(cv2.imencode(".jpg", img_cv2)[1])
+        print(bytes_img)
+        self.db_manager.add_result_image(id_image, bytes_img)
+
+    def get_result_image_id(self, id_image: int):
+        return self.db_manager.get_row_image_id(id_image)[1]
 
     def save_img(self):
         file_ = "temp.jpg"

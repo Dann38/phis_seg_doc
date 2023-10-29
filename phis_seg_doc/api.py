@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request, UploadFile
 from manager import Manager
-from fastapi.responses import FileResponse
+from fastapi.responses import Response
 import uvicorn
 
 PORT = 1234
@@ -24,19 +24,22 @@ async def hello(request: Request):
 async def upload_file(file: UploadFile):
     print(file.filename)
     print(file.size)
-    manager.set_img(file.file.read())
+    id_image = manager.set_img(file.file.read())
+    json = {"id_image": id_image}
+    return json
 
 
-@app.post("/file/classify")
-async def classify():
-    manager.classify()
+@app.post("/file/classify/{id_image}")
+async def classify(id_image: int):
+    manager.classify(id_image)
 
 
-@app.get("/file/get_img")
-async def get_img():
-    manager.save_img()
-    img = FileResponse(path="temp.jpg")
-    # manager.delete_img()
-    return img
+@app.get("/file/get_result/{id_image}")
+async def get_img(id_image: int):
+    # manager.save_img()
+    # img = FileResponse(path="temp.jpg")
+    # # manager.delete_img()
+
+    return Response(content=manager.get_result_image_id(id_image))
 
 

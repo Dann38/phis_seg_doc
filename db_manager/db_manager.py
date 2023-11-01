@@ -66,29 +66,34 @@ class ManagerDB:
         conn.commit()
 
     def get_row_image_id(self, id_image: int) -> Tuple[bytes, bytes]:
-        print("IMAGE ID:", id_image)
         conn = self.engine.connect()
         s = select(image_table).where(
               image_table.c.id == id_image
         )
         r = conn.execute(s).first()
-        print(r)
         return r[1], r[2]
 
-
     def get_result_image_id(self, id_image: int) -> bytes:
-        print("IMAGE ID:", id_image)
         conn = self.engine.connect()
         s = select(image_table).where(
             image_table.c.id == id_image
         )
         r = conn.execute(s)
-        print(r)
         return r.first()[2]
+
+    def get_id_10_last(self) -> list[int]:
+        conn = self.engine.connect()
+        s = select(image_table.c.id).order_by(image_table.c.date_update.desc()).limit(10)
+        r = conn.execute(s)
+        list_result = [id_[0] for id_ in r.all()]
+        return list_result
 
 
 if __name__ == '__main__':
     db_manager = ManagerDB()
-    # db_manager.open_db()
-    db_manager.first_start()
+    db_manager.open_db()
+    # db_manager.first_start()
+    # db_manager.delete_table()
+    # db_manager.create_table()
+
 

@@ -55,16 +55,8 @@
                   
               </div>
               <div style="overflow-y:auto;" class="col-2 history-block vh-100">
-                    <ul class="list-group ">
-                        {% for id in context.id_list %}
-                        <div class="card" style="width: 100%;">
-                          <img src="/get_image_origin/{{ id }}" class="card-img-top" alt="...">
-                          <div class="card-body">
-                            <a href="#" class="button_id_send btn btn-primary" data-row-id="{{id}}">id: {{ id }}</a>
-                          </div>
-                        </div>
-                            <li class="list-group-item"></li>
-                        {% endfor %}
+                    <ul id="history-group" class="list-group">
+
                     </ul>
               </div>
           </div>

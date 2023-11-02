@@ -18,11 +18,7 @@ img = File()
 
 @app.route("/")
 def index():
-    content = requests.get(f'{host_classifier}/file/get_history').content
-    print("content", type(content), content)
-    rez_json = json.loads(content)
-    print("loads", type(rez_json), rez_json)
-    return render_template("index.html", context=rez_json)
+    return render_template("index.html")
 
 
 @app.route("/upload", methods=["POST"])
@@ -41,3 +37,9 @@ def get_image_result(id_image):
 @app.route("/get_image_origin/<int:id_image>", methods=["GET"])
 def get_image_origin(id_image):
     return requests.get(f'{host_classifier}/file/get_origin/{id_image}').content
+
+
+@app.route("/get_history", methods=["GET"])
+def get_history():
+    content = requests.get(f'{host_classifier}/file/get_history').content
+    return json.loads(content)

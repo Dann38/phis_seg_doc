@@ -54,7 +54,9 @@ class Manager:
         return bytearray(cv2.imencode(".jpg", image)[1])
 
     def get_list_id(self) -> list[int]:
-        return self.db_manager.get_id_10_last()
+        rez = self.db_manager.get_id_10_last()
+        print("MANAGER:", rez)
+        return rez
 
 
 

@@ -1,3 +1,5 @@
+import json
+
 from fastapi import FastAPI, UploadFile
 from manager import Manager
 from fastapi.responses import Response
@@ -37,4 +39,4 @@ async def get_img_origin(id_image: int):
 
 @app.get("/file/get_history")
 async def get_history():
-    return manager.get_list_id()
+    return {'id_list': manager.get_list_id()}

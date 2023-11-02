@@ -1,6 +1,7 @@
 import json
 
-from fastapi import FastAPI, UploadFile
+from fastapi import FastAPI, UploadFile, Request
+from pydantic import BaseModel
 from manager import Manager
 from fastapi.responses import Response
 import uvicorn
@@ -9,6 +10,11 @@ PORT = 1234
 
 app = FastAPI()
 manager = Manager()
+
+
+class ParametersClassifier(BaseModel):
+    method: int
+    coef: float
 
 
 def run_api() -> None:
@@ -23,8 +29,9 @@ async def upload_file(file: UploadFile):
 
 
 @app.post("/file/classify/{id_image}")
-async def classify(id_image: int):
-    manager.classify(id_image)
+async def classify(id_image: int, parameter: ParametersClassifier):
+
+    manager.classify(id_image, parameter.method, parameter.coef)
 
 
 @app.get("/file/get_result/{id_image}")
@@ -40,3 +47,9 @@ async def get_img_origin(id_image: int):
 @app.get("/file/get_history")
 async def get_history():
     return {'id_list': manager.get_list_id()}
+
+
+@app.get("/file/get_set_classifier/{id_image}")
+async def get_set_classifier(id_image: int):
+    method, coef = manager.get_method_and_coef(id_image)
+    return {"method": method, "coef": coef}

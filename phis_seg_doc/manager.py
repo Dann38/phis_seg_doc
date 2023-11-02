@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 
-from doc_img_utils.bold_classifier import PsBoldClassifier
+from doc_img_utils.bold_classifier import PsBoldClassifier, MeanBoldClassifier, MedianBoldClassifier
 from doc_img_utils.tesseract_reader import TesseractReader, TesseractReaderConfig
 from doc_img_utils.marker import Marker
 from db_manager import ManagerDB
@@ -14,19 +14,23 @@ class Manager:
         self.marker = Marker()
         conf_doc_reader = TesseractReaderConfig(lang="rus")
         self.doc_reader = TesseractReader(conf_doc_reader)
+        self.classifiers = {1: MeanBoldClassifier(),
+                            2: MedianBoldClassifier(),
+                            3: PsBoldClassifier()}
 
     def set_img(self, img: bytes):
         id_image = self.db_manager.add_row_image_id()
         self.db_manager.add_origin_image(id_image, img)
         return id_image
 
-    def classify(self, id_image: int):
+    def classify(self, id_image: int, method: int, coef: float):
         # Получить IMG
         img_cv2 = self.get_origin_image_id(id_image)
 
         # Настройка классификатора
-        classifier = PsBoldClassifier()
-        classifier.clusterizer.significance_level = 0.50
+        classifier = self.classifiers[method]
+        classifier.clusterizer.significance_level = coef
+        self.db_manager.add_set_classifier(id_image, method, coef)
 
         # Классификация и разметка
         words = self.doc_reader.read(img_cv2)
@@ -55,8 +59,8 @@ class Manager:
 
     def get_list_id(self) -> list[int]:
         rez = self.db_manager.get_id_10_last()
-        print("MANAGER:", rez)
         return rez
 
-
+    def get_method_and_coef(self, id_image: int):
+        return self.db_manager.get_method_and_coef(id_image)
 

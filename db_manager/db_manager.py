@@ -74,6 +74,17 @@ class ManagerDB:
         r = conn.execute(upd)
         conn.commit()
 
+    def add_set_classifier(self, id_image: int, method: int, coef: float):
+        upd = update(image_table).where(
+            image_table.c.id == id_image
+        ).values(
+            method=method,
+            coef=coef
+        )
+        conn = self.engine.connect()
+        r = conn.execute(upd)
+        conn.commit()
+
     def get_row_image_id(self, id_image: int) -> Tuple[bytes, bytes]:
         conn = self.engine.connect()
         s = select(image_table).where(
@@ -96,6 +107,14 @@ class ManagerDB:
         r = conn.execute(s)
         list_result = [id_[0] for id_ in r.all()]
         return list_result
+
+    def get_method_and_coef(self, id_image: int) -> tuple[int, float]:
+        conn = self.engine.connect()
+        s = select(image_table).where(
+            image_table.c.id == id_image
+        )
+        r = conn.execute(s).first()
+        return r[5], r[6]
 
 
 if __name__ == '__main__':

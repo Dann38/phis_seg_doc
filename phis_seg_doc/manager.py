@@ -16,7 +16,8 @@ class Manager:
         self.doc_reader = TesseractReader(conf_doc_reader)
 
     def set_img(self, img: bytes):
-        id_image = self.db_manager.add_origin_image(img)
+        id_image = self.db_manager.add_row_image_id()
+        self.db_manager.add_origin_image(id_image, img)
         return id_image
 
     def classify(self, id_image: int):
@@ -52,6 +53,8 @@ class Manager:
     def img2bytes(self, image: np.ndarray) -> bytes:
         return bytearray(cv2.imencode(".jpg", image)[1])
 
+    def get_list_id(self) -> list[int]:
+        return self.db_manager.get_id_10_last()
 
 
 

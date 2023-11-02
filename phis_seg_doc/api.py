@@ -33,3 +33,8 @@ async def get_img_result(id_image: int):
 @app.get("/file/get_origin/{id_image}")
 async def get_img_origin(id_image: int):
     return Response(content=manager.get_origin_bytes_image_id(id_image))
+
+
+@app.get("/file/get_history")
+async def get_history():
+    return manager.get_list_id()

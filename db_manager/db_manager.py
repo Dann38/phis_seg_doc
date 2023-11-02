@@ -46,16 +46,25 @@ class ManagerDB:
     def open_db(self):
         self.engine = create_engine(f"postgresql+psycopg2://{NAME}:{PASSWORD}@{HOST}/{NAME_DB}")
 
-    def add_origin_image(self, origin_image) -> int:
+    def add_row_image_id(self) -> int:
         ins = insert(image_table).values(
-            original_image=origin_image,
         )
         conn = self.engine.connect()
         r = conn.execute(ins)
         conn.commit()
         return r.inserted_primary_key[0]
 
-    def add_result_image(self, id_image:int, result_image:bytes):
+    def add_origin_image(self, id_image: int, origin_image: bytes):
+        upd = update(image_table).where(
+            image_table.c.id == id_image
+        ).values(
+            original_image=origin_image
+        )
+        conn = self.engine.connect()
+        r = conn.execute(upd)
+        conn.commit()
+
+    def add_result_image(self, id_image: int, result_image:bytes):
         upd = update(image_table).where(
             image_table.c.id == id_image
         ).values(

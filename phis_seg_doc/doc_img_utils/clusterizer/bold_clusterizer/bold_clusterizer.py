@@ -3,7 +3,7 @@ from abc import abstractmethod
 import numpy as np
 from scipy.stats import norm
 
-from doc_img_utils.bold_classifier.types_font import BOLD, REGULAR
+from phis_seg_doc.doc_img_utils.bold_classifier.types_font import BOLD, REGULAR
 from ..clusterizer import BaseClusterizer
 
 

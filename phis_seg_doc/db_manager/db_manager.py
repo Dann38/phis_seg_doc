@@ -1,13 +1,14 @@
 from sqlalchemy import create_engine
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-from .models import metadata, image as image_table
+from models import metadata, image as image_table
 from sqlalchemy import insert, select, update
 from typing import Tuple
 
+
 NAME = "postgres"
 PASSWORD = "kopylov"
-HOST = "localhost"
+HOST = "localhost:1272"
 NAME_DB = "image"
 
 
@@ -117,11 +118,5 @@ class ManagerDB:
         return r[5], r[6]
 
 
-if __name__ == '__main__':
-    db_manager = ManagerDB()
-    db_manager.open_db()
-    # db_manager.first_start()
-    # db_manager.delete_table()
-    # db_manager.create_table()
 
 

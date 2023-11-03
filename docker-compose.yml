@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  client:
+    build: upload_files/
+    ports:
+      - 1234:1271
+    network_mode: host
+  db:
+    image: bitnami/postgresql
+    ports:
+      - 1235:1272
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=kopylov
+      - POSTGRES_DB=image
+  server:
+    build: phis_seg_doc/
+    command: python main.py
+    ports:
+      - 1236:1273
+
+

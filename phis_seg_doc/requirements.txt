@@ -40,7 +40,6 @@ networkx==3.1
 numpy==1.26.0
 opencv-python==4.8.1.78
 packaging==23.2
-phis-seg-doc @ file:///C:/Users/danii/program/python/project/phis_seg_doc
 Pillow==10.0.1
 postgresql-orm==0.5.8
 psycopg2-binary==2.9.9

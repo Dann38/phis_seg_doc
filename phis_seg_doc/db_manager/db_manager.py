@@ -1,14 +1,14 @@
 from sqlalchemy import create_engine
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-from models import metadata, image as image_table
+from .models import metadata, image as image_table
 from sqlalchemy import insert, select, update
 from typing import Tuple
 
 
 NAME = "postgres"
 PASSWORD = "kopylov"
-HOST = "localhost:1272"
+HOST = "db"
 NAME_DB = "image"
 
 
@@ -23,20 +23,24 @@ class ManagerDB:
         self.create_table()
 
     def create_db(self):
-        try:
-            # Устанавливаем соединение с postgres
-            connection = psycopg2.connect(user=NAME, password=PASSWORD)
-            connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+        # Устанавливаем соединение с postgres
+        connection = psycopg2.connect(user=NAME, password=PASSWORD, host=HOST)
+        connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 
-            # Создаем курсор для выполнения операций с базой данных
-            cursor = connection.cursor()
+        # Создаем курсор для выполнения операций с базой данных
+        cursor = connection.cursor()
+        try:
             # Создаем базу данных
             cursor.execute(f'create database {NAME_DB}')
             # Закрываем соединение
             cursor.close()
             connection.close()
+
         except psycopg2.errors.DuplicateDatabase:
             print("Уже существует")
+        self.open_db()
+        self.delete_table()
+        self.create_table()
 
     def create_table(self):
         metadata.create_all(self.engine)

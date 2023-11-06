@@ -4,7 +4,7 @@ import os
 import requests
 from flask import Flask, render_template, request
 
-host_classifier = "http://localhost:1234"
+host_classifier = "http://server:1235"
 
 
 class File:

@@ -1,23 +1,41 @@
 version: "3"
 
 services:
+  db:
+    image: bitnami/postgresql
+
+    ports:
+      - "1281:5432"
+    environment:
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=kopylov
+      - POSTGRESQL_DATABASE=image
+      - POSTGRESQL_PORT_NUMBER=5432
+    networks:
+      - my-network
+
+  server:
+    build: phis_seg_doc/
+
+    command: python3 main.py
+    ports:
+      - "1282:1235"
+    depends_on:
+      - db
+    networks:
+      - my-network
+
   client:
     build: upload_files/
     ports:
-      - 1234:1271
-    network_mode: host
-  db:
-    image: bitnami/postgresql
-    ports:
-      - 1235:1272
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=kopylov
-      - POSTGRES_DB=image
-  server:
-    build: phis_seg_doc/
-    command: python main.py
-    ports:
-      - 1236:1273
+      - "1283:1236"
+
+    depends_on:
+      - server
+    networks:
+      - my-network
+
+networks:
+  my-network:
 
 

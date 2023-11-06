@@ -3,7 +3,7 @@ from typing import List
 
 import numpy as np
 
-from phis_seg_doc.doc_img_utils.bbox import BBox
+from doc_img_utils.bbox import BBox
 
 
 class BaseBoldClassifier(ABC):

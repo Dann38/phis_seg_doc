@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from typing import List
-from phis_seg_doc.doc_img_utils.bbox import BBox
+from doc_img_utils.bbox import BBox
 
 OFFSET_ROW = 2
 BOLD_ROW = 1

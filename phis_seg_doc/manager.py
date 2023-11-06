@@ -1,10 +1,10 @@
 import numpy as np
 import cv2
 
-from phis_seg_doc.doc_img_utils.bold_classifier import PsBoldClassifier, MeanBoldClassifier, MedianBoldClassifier
-from phis_seg_doc.doc_img_utils.tesseract_reader import TesseractReader, TesseractReaderConfig
-from phis_seg_doc.doc_img_utils.marker import Marker
-from phis_seg_doc.db_manager import ManagerDB
+from doc_img_utils.bold_classifier import PsBoldClassifier, MeanBoldClassifier, MedianBoldClassifier
+from doc_img_utils.tesseract_reader import TesseractReader, TesseractReaderConfig
+from doc_img_utils.marker import Marker
+from db_manager import ManagerDB
 
 
 class Manager:

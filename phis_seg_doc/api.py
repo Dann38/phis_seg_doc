@@ -6,8 +6,6 @@ from manager import Manager
 from fastapi.responses import Response
 import uvicorn
 
-PORT = 1234
-
 app = FastAPI()
 manager = Manager()
 
@@ -17,8 +15,8 @@ class ParametersClassifier(BaseModel):
     coef: float
 
 
-def run_api() -> None:
-    uvicorn.run(app=app, host="0.0.0.0", port=int(PORT))
+def run_api(host: str, port: int) -> None:
+    uvicorn.run(app=app, host=host, port=port)
 
 
 @app.post("/file/upload-file")
@@ -53,3 +51,8 @@ async def get_history():
 async def get_set_classifier(id_image: int):
     method, coef = manager.get_method_and_coef(id_image)
     return {"method": method, "coef": coef}
+
+
+@app.get("/create_db")
+async def create_db():
+    return manager.db_manager.create_db()
